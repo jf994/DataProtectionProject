@@ -1,0 +1,3 @@
+# formati da ignorare
+src/*.mat
+src/*.asv
