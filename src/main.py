@@ -24,7 +24,7 @@ a = .9
 
 R = a * R1 + (1 - a) * R0
 
-privacy = (1 - R) * 100
+privacy = float((1 - R) * 100)
 
 print("User Privacy raggiunta: {}%".format(privacy))
 
