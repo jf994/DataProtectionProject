@@ -13,14 +13,13 @@ for i = 1:size(dataset,1)
     end
 end
 
-clear dataset i items j p
+clear dataset i items j
 save('distorted_500.mat');
 
 %% distorsione ds 5000
 clear
 
 load('dataset_5000.mat');
-p = .7;
 
 distorted = [];
 for i = 1:size(dataset,1)
@@ -30,7 +29,7 @@ for i = 1:size(dataset,1)
     end
 end
 
-clear dataset i items j p
+clear dataset i items j
 save('distorted_5000.mat');
 
 %% distorsione 50k
@@ -38,7 +37,6 @@ save('distorted_5000.mat');
 clear
 
 load('dataset_50k.mat');
-p = .7;
 
 distorted = [];
 for i = 1:size(dataset,1)
@@ -48,7 +46,7 @@ for i = 1:size(dataset,1)
     end
 end
 
-clear dataset i items j p
+clear dataset i items j
 save('distorted_50k.mat');
 
 %% distorsione 500k part 1
@@ -56,7 +54,6 @@ save('distorted_50k.mat');
 clear
 
 load('dataset_500k.mat');
-p = .7;
 
 temp = [];
 
@@ -80,5 +77,5 @@ end
 fprintf('Distorsione conclusa.\n');
 
 distorted = temp;
-clear dataset i items j p temp
+clear dataset i items j temp
 save('distorted_500k.mat');
