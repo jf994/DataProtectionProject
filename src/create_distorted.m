@@ -68,8 +68,6 @@ load('distorted_50k.mat')
 temp = [temp; distorted];
 
 clear distorted
-distorted = temp;
-clear temp
 %% distorsione 500k part 2
 
 
@@ -79,13 +77,8 @@ for i = 55501:size(dataset,1)
         temp(i,j) = xor(dataset(i,j),ri_complement(p)); %#ok<*SAGROW>
     end
 end
+fprintf('Distorsione conclusa.\n');
 
-clear dataset i items j p
+distorted = temp;
+clear dataset i items j p temp
 save('distorted_500k.mat');
-
-
-
-
-
-
-
