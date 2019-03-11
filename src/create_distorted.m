@@ -18,7 +18,7 @@ save('distorted_500.mat');
 
 %% distorsione ds 5000
 clear
-
+p = .7;
 load('dataset_5000.mat');
 
 distorted = [];

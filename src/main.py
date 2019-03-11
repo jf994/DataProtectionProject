@@ -30,6 +30,7 @@ privacy = (1 - R) * 100
 
 print("User Privacy raggiunta: {}%".format(privacy))
 
+
 # Stima singleton supports colonna 1
 
 j = 2
@@ -47,3 +48,4 @@ C_D = np.matrix([[C1_D], [C0_D]])
 print(C_D)
 C_T = np.dot(np.linalg.inv(M), C_D)
 print(C_T)
+
