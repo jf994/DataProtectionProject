@@ -13,3 +13,4 @@
 
 * Dataset randomico può creare problemi (non trovo pattern)?
 * Sufficiente ricreare il codice mostrato nel pdf? Azioni richieste?
+* Calcolo C_T non funzionante (M^-1 * C_D esce fuori un numero negativo)
