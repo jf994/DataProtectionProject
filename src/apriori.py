@@ -25,7 +25,7 @@ for i in range(0, len(tot[0])):
 
 #print(records)
 print("Doing association...\n")
-association_rules = apriori(records, min_support=0.006, min_confidence=0.2, min_lift=3, min_length=2)
+association_rules = apriori(records, min_support=0.005, min_confidence=0.2, min_lift=3, min_length=2)
 association_results = list(association_rules)
 
 for item in association_results:
