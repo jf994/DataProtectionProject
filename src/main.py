@@ -3,13 +3,13 @@ import numpy as np
 from scipy import sparse
 
 # Carico i valori salvati nei file .mat
-file_mat_ds = io.loadmat('dataset_5000.mat')
+file_mat_ds = io.loadmat('dataset.mat')
 dataset = sparse.csr_matrix(file_mat_ds['dataset'])
-items = int(file_mat_ds['items'])
+items = len(np.array(file_mat_ds['items']))
 support = float(file_mat_ds['support'])
 
 
-file_mat_dist = io.loadmat('distorted_5000.mat')
+file_mat_dist = io.loadmat('distorted.mat')
 distorted = np.matrix(file_mat_dist['distorted'])
 p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])

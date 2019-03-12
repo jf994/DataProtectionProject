@@ -1,10 +1,10 @@
 clear
 clc
 
-load('dataset_500k.mat');
+load('dataset.mat');
 
 average_bought = round(sum(sum(dataset)) / size(dataset,1));
-support = full(average_bought / items);
+support = full(average_bought / size(items,1));
 
 clear average_bought
-save('dataset_500k.mat');
+save('dataset.mat');

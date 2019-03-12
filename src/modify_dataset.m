@@ -38,4 +38,6 @@ clear flag i j k
 
 items = char(items);
 text = char(text);
-save('../docs/dataset.mat');
+max_ones = full(max(sum(dataset,2)));
+
+save('dataset.mat');
