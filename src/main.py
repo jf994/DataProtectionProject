@@ -85,6 +85,7 @@ for row in range(0, pow(2, n)):
         M[row][col] = temp
 
 print("\nM_big:\n{}".format(M))
+# uso due for annidati per esplorare tutte le coppie di 10 elementi. start da 0 a 10-1 e l da start+1 a 10 evitando ripetizioni
 for start in range(0, 9):
     for l in range(start+1, 10):
         # genero opportunamente C_D per il caso multidimensionale
@@ -92,8 +93,6 @@ for start in range(0, 9):
 
         # trovo le corrispondenze per i valori binari cercati ad ogni giro e costruisco C_D come spiegato sul pdf MASK
         for i in range(0, pow(2, n)):
-            print("\n")
-            print(i)
             k = '{0:b}'.format(i)
             k = k.zfill(n)
             for h in range(0, 7500):
@@ -102,14 +101,15 @@ for start in range(0, 9):
                 #print(str(k) + " binario: " + binario)
                 if str(k) == binario:
                     C2n_D[pow(2, n)-1-i][0] += 1
-            #C_D(k) = ci_D
         #print("\nC2n_D:\n{}".format(C2n_D))
 
         # calcolo C_T
         # TODO: ha lo stesso identico problema del C_T monodimensionale (numeri negativi presenti)...ignoriamo il problema in questo caso
         C2n_T = np.dot(np.linalg.inv(M), C2n_D)
         print("\nC_T_big:\n {}".format(C2n_T))
+        # se il primo valore, relativo a 11 per il vettore appena ottenuto supera il theshold
         if C2n_T[0] > threshold:
+            # creo la relazione e la appendo alla lista
             relation = str(items[start][:]) + " --> " + str(items[l][:])
             relations.append(relation)
 
