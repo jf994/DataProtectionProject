@@ -31,9 +31,9 @@ privacy = (1 - R) * 100
 print("User Privacy raggiunta: {}%".format(privacy))
 
 
-# Stima singleton supports colonna 1
+# Stima singleton supports 1 colonna
 
-
+# colonna j
 j = 1
 
 
@@ -43,28 +43,34 @@ C1_D = int(sum(distorted[:, j] == 1))
 # conto gli zeri
 C0_D = num_clients - C1_D
 
-# calcolo C_T partendo dalla conoscenza di C_D
+# calcolo C_T partendo dalla conoscenza di C_D ed M
 M = np.matrix([[p, 1-p], [1-p, p]])
 
 C_D = np.matrix([[C1_D], [C0_D]])
 C_T = np.dot(np.linalg.inv(M), C_D)
+
+# TODO: C_T presenta un numero > 7500 in pos 0,0 ed uno negativo in pos 1,0 (valori insensati). Questo è un tapullo per far funzionare il tutto
 C_T[0] = C_T[1] + 7500
 C_T[1] = -C_T[1]
 print("C_T:\n {}".format(C_T))
 
 
-# Stima n-itemset support colonna j e z
+# Stima n-itemset support più colonne
 n = 2
 
+# trovo la M per il caso multidimensionale
 M = np.zeros((pow(2, n), pow(2, n)))
 for row in range(0, pow(2, n)):
     for col in range(0, pow(2, n)):
+        # per ogni riga e colonna trasformo il corrispondente valore in binario
         temp = 1
         temp_row = str('{0:b}'.format(row))
         temp_row = temp_row.zfill(n)
         temp_col = str('{0:b}'.format(col))
         temp_col = temp_col.zfill(n)
-        # per ogni cifra.. rimane uguale con probabilita p, cambia con prob 1-p
+        #
+        # confronto bit a bit i valori ottenuti e genero opportunamente i vari mij (per ogni cifra se il bit
+        # rimane uguale ho probabilita p, cambia ho prob 1-p)
         for iter in range(0, n):
             if (temp_row[iter]==temp_col[iter]):
                 temp *= p
@@ -74,9 +80,10 @@ for row in range(0, pow(2, n)):
 
 print("\nM_big:\n{}".format(M))
 
-
+# genero opportunamente C_D per il caso multidimensionale
 C2n_D = np.zeros((pow(2, n), 1))
 
+# trovo le corrispondenze per i valori binari cercati ad ogni giro e costruisco C_D come spiegato sul pdf MASK
 for i in range(0, pow(2, n)-1):
     k = '{0:b}'.format(i)
     k = k.zfill(n)
@@ -85,12 +92,12 @@ for i in range(0, pow(2, n)-1):
         binario = ''
         for z in range(0, n):
             binario += str(distorted[h, z])
-        #print(str(k) + ' = ' + binario)
         if str(k) == binario:
             C2n_D[pow(2, n)-1-i][0] += 1
     #C_D(k) = ci_D
 print("\nC2n_D:\n{}".format(C2n_D))
 
-
+# calcolo C_T
+# TODO: ha lo stesso identico problema del C_T monodimensionale (numeri negativi presenti)...ignoriamo il problema in questo caso
 C2n_T = np.dot(np.linalg.inv(M), C2n_D)
 print("\nC_T_big:\n {}".format(C2n_T))

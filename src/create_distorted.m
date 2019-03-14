@@ -1,10 +1,12 @@
 clear
 clc
 
-% distorsione dataset
+% faccio distorsione dataset
 load('dataset.mat');
+% probabilità
 p = .7;
 
+% applico la formula della distorsione
 distorted = [];
 for i = 1:size(dataset,1)
     i
@@ -13,6 +15,7 @@ for i = 1:size(dataset,1)
     end
 end
 
+% salvo il tutto più numero massimo di uni presenti in riga
 clear dataset i j text
 max_ones = full(max(sum(distorted,2)));
 

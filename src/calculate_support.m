@@ -1,6 +1,7 @@
 clear
 clc
-
+% calcolo il supporto medio s0, formula derivata dal pdf MASK paragrafo 3.2
+% in fondo
 load('dataset.mat');
 
 average_bought = round(sum(sum(dataset)) / size(dataset,1));
