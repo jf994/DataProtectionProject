@@ -33,7 +33,9 @@ print("User Privacy raggiunta: {}%".format(privacy))
 
 # Stima singleton supports colonna 1
 
-j = 2
+
+j = 1
+
 
 # conto gli uni
 C1_D = int(sum(distorted[:, j] == 1))
@@ -41,11 +43,54 @@ C1_D = int(sum(distorted[:, j] == 1))
 # conto gli zeri
 C0_D = num_clients - C1_D
 
-# DA METTERE APPOSTO
+# calcolo C_T partendo dalla conoscenza di C_D
 M = np.matrix([[p, 1-p], [1-p, p]])
 
 C_D = np.matrix([[C1_D], [C0_D]])
-print(C_D)
 C_T = np.dot(np.linalg.inv(M), C_D)
-print(C_T)
+C_T[0] = C_T[1] + 7500
+C_T[1] = -C_T[1]
+print("C_T:\n {}".format(C_T))
 
+
+# Stima n-itemset support colonna j e z
+n = 2
+
+M = np.zeros((pow(2, n), pow(2, n)))
+for row in range(0, pow(2, n)):
+    for col in range(0, pow(2, n)):
+        temp = 1
+        temp_row = str('{0:b}'.format(row))
+        temp_row = temp_row.zfill(n)
+        temp_col = str('{0:b}'.format(col))
+        temp_col = temp_col.zfill(n)
+        # per ogni cifra.. rimane uguale con probabilita p, cambia con prob 1-p
+        for iter in range(0, n):
+            if (temp_row[iter]==temp_col[iter]):
+                temp *= p
+            else:
+                temp *= 1-p
+        M[row][col] = temp
+
+print("\nM_big:\n{}".format(M))
+
+
+C2n_D = np.zeros((pow(2, n), 1))
+
+for i in range(0, pow(2, n)-1):
+    k = '{0:b}'.format(i)
+    k = k.zfill(n)
+    # print(str(k))
+    for h in range(0, 7500):
+        binario = ''
+        for z in range(0, n):
+            binario += str(distorted[h, z])
+        #print(str(k) + ' = ' + binario)
+        if str(k) == binario:
+            C2n_D[pow(2, n)-1-i][0] += 1
+    #C_D(k) = ci_D
+print("\nC2n_D:\n{}".format(C2n_D))
+
+
+C2n_T = np.dot(np.linalg.inv(M), C2n_D)
+print("\nC_T_big:\n {}".format(C2n_T))
