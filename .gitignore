@@ -1,6 +1,5 @@
 # formati da ignorare
 src/*.mat
 docs/*.mat
-docs/*.xlsx
 docs/*.csv
 src/*.asv
