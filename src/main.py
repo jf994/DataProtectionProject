@@ -68,8 +68,8 @@ n = 2
 M = np.zeros((pow(2, n), pow(2, n)))
 for row in range(0, pow(2, n)):
     for col in range(0, pow(2, n)):
-        # le probabilita sono indipendenti, la probabilit‡ finale viene calcolata
-        # come il prodotto delle opportune probabilit‡. temp = 1 come valore neutro per la motliplicazione
+        # le probabilita sono indipendenti, la probabilit√† finale viene calcolata
+        # come il prodotto delle opportune probabilit√†. temp = 1 come valore neutro per la motliplicazione
         temp = 1
         # per ogni riga e colonna trasformo il corrispondente valore in binario
         temp_row = str('{0:b}'.format(row))
@@ -88,7 +88,7 @@ for row in range(0, pow(2, n)):
 
 print("\nM_big:\n{}".format(M))
 
-# f Ë la cardinalit‡ dell'insieme considerato (numero di coppie trovate)
+# f √® la cardinalit√† dell'insieme considerato (numero di coppie trovate)
 f = 0
 somma = 0
 # uso due for annidati per esplorare tutte le coppie di 10 elementi. start da 0 a 10-1 e l da start+1 a 10 evitando ripetizioni
@@ -115,8 +115,8 @@ for start in range(0, 9):
                 # TODO: generalizzare questo controllo per n>2
                 if i == 0 and dataset.A[h][start] == 1 and dataset.A[h][l] == 1:
                         act_support += 1
-        # calcolo del supporto ricostruito: calcoliamo la probabilit‡ che un 11 sia stato distorto in uno qualsiasi delle
-        # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D
+        # calcolo del supporto ricostruito: calcoliamo la probabilit√† che un 11 sia stato distorto in uno qualsiasi delle
+        # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
         rec_support = M[0][0]*C2n_D[0][0] + M[0][1]*C2n_D[1][0] + M[0][1]*C2n_D[2][0] + M[0][3]*C2n_D[3][0]
 
         act_support /= 7500
@@ -139,7 +139,7 @@ for start in range(0, 9):
             relations.append(relation)
 
 # conclusione del calcolo del support error i valori riscontrati sono enormi, nell'ordine delle migliaia.
-# Dovrebbero essere, al massimo, nell'ordine delle unit‡.
+# Dovrebbero essere, al massimo, nell'ordine delle unit√†
 result = 100/f * somma
 print("\nrelations:\n{}".format(relations))
-print("\nresultanze:\n{}".format(result))
+print("\nrisultati:\n{}".format(result))

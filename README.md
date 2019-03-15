@@ -6,6 +6,10 @@
 
 * act_support, calcolato in "main.py", relativo alla formula presentata nel paragrafo 6.3 del pdf talvolta viene zero generando una divisione per zero (risolto settando a zero per quel giro il risultato di (rec_support-act_support/at_support) )
 
+* Come ricavare f per il calcolo support error (paragrafo 6.3)? L'abbiamo interpretata come il numero di tutte le possibili combinazioni di n elementi
+
+* R ed F per l'identity error (paragrafo 6.3) sono il numero di elementi presenti rispettivamente nel C_T ricostruito col metodo di cui al punto uno (M^-1 * C_D) e del C_T "vero" che superano un certo threshold?
+
 ## Funzionamento generale 
 
 Per preparare il dataset nel formato richiesto dallo script in python, è necessario lanciare prima lo script matlab "modify_dataset.m", che salva il dataset contenuto nel file .xlsx in una matrice sparsa di 0 e 1. Lo script genera un file .mat che viene poi interpretato. Vengono inoltre salvate altre variabili di circostanza per la ricostruzione come l'identità originaria degli item.
