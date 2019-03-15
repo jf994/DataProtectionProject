@@ -6,9 +6,9 @@
 
 * act_support, calcolato in "main.py", relativo alla formula presentata nel paragrafo 6.3 del pdf talvolta viene zero generando una divisione per zero (risolto settando a zero per quel giro il risultato di (rec_support-act_support/at_support) )
 
-* Come ricavare f per il calcolo support error (paragrafo 6.3)? L'abbiamo interpretata come il numero di tutte le possibili combinazioni di n elementi
+* Come ricavare f per il calcolo support error (paragrafo 6.3)? L'abbiamo interpretata come il numero di tutte le possibili combinazioni di n elementi (vedi "main.py")
 
-* R ed F per l'identity error (paragrafo 6.3) sono il numero di elementi presenti rispettivamente nel C_T ricostruito col metodo di cui al punto uno (M^-1 * C_D) e del C_T "vero" che superano un certo threshold?
+* R ed F per l'identity error (paragrafo 6.3) sono il numero di elementi presenti rispettivamente nel C_T ricostruito col metodo di cui al punto uno (M^-1 * C_D) e del C_T "vero" che superano un certo threshold? (ancora da implementare)
 
 ## Funzionamento generale 
 
