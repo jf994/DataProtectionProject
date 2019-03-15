@@ -85,24 +85,40 @@ for row in range(0, pow(2, n)):
         M[row][col] = temp
 
 print("\nM_big:\n{}".format(M))
+
+f = 0
+somma = 0
 # uso due for annidati per esplorare tutte le coppie di 10 elementi. start da 0 a 10-1 e l da start+1 a 10 evitando ripetizioni
 for start in range(0, 9):
     for l in range(start+1, 10):
+        f += 1
+        print("giro: {}, colonne: {}{}".format(f,start, l))
         # genero opportunamente C_D per il caso multidimensionale
         C2n_D = np.zeros((pow(2, n), 1))
-
         # trovo le corrispondenze per i valori binari cercati ad ogni giro e costruisco C_D come spiegato sul pdf MASK
+        act_support = 0
         for i in range(0, pow(2, n)):
             k = '{0:b}'.format(i)
             k = k.zfill(n)
+
             for h in range(0, 7500):
                 binario = ''
                 binario = str(distorted[h, start]) + str(distorted[h, l])
                 #print(str(k) + " binario: " + binario)
                 if str(k) == binario:
                     C2n_D[pow(2, n)-1-i][0] += 1
-        #print("\nC2n_D:\n{}".format(C2n_D))
+                    #print("\nC2n_D:\n{}".format(C2n_D))
+                if i == 0 and dataset.A[h][start] == 1 and dataset.A[h][l] == 1:
+                        act_support += 1
+        #modifiche------------
+        rec_support = M[0][0]*C2n_D[0][0] + M[0][1]*C2n_D[1][0] + M[0][1]*C2n_D[2][0] + M[0][3]*C2n_D[3][0]
 
+        act_support /= 7500
+        if act_support == 0:
+            somma += 0
+        else:
+            somma += (abs(1-act_support)/act_support)
+        #modifiche -----------------
         # calcolo C_T
         # TODO: ha lo stesso identico problema del C_T monodimensionale (numeri negativi presenti)...ignoriamo il problema in questo caso
         C2n_T = np.dot(np.linalg.inv(M), C2n_D)
@@ -113,5 +129,6 @@ for start in range(0, 9):
             relation = str(items[start][:]) + " --> " + str(items[l][:])
             relations.append(relation)
 
-
+result = 100/f * somma
 print("\nrelations:\n{}".format(relations))
+print("\nresultanze:\n{}".format(result))

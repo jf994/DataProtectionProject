@@ -1,5 +1,11 @@
 # Progetto a cura di Fabrizio Zavanone e Jacopo Favaro
 
+## Problemi riscontrati
+
+In "main.py", file che sostanzialmente contiene tutto il procedimento mostrato nel paper, abbiamo riscontrato problemi relativamente al calcolo di C_T partendo dalla conoscenza di C_D (sia per quanto riguarda il caso monodimensionale che per quello multidimensionale). C_T ottenuto tramite prodotto tra l'inversa di M (opportunamente creata) e C_D, dà in output valori numerici insensati. Nel caso monodimensionale abbiamo un valore > 7500 ed un altro negativo (la somma di questi due, però, fa 7500). Nel caso multidimensionale otteniamo sempre errori di questo genere con numeri negativi o troppo grandi.
+
+## Funzionamento generale 
+
 Per preparare il dataset nel formato richiesto dallo script in python, è necessario lanciare prima lo script matlab "modify_dataset.m", che salva il dataset contenuto nel file .xlsx in una matrice sparsa di 0 e 1. Lo script genera un file .mat che viene poi interpretato. Vengono inoltre salvate altre variabili di circostanza per la ricostruzione come l'identità originaria degli item.
 
 In seguito deve essere lanciato lo script matlab "calculate_support.m" che calcola il supporto medio s0 per il dataset e lo salva nel .mat precedente (valore utile al calcolo della privacy).
