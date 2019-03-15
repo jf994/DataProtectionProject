@@ -1,7 +1,5 @@
 # Progetto a cura di Fabrizio Zavanone e Jacopo Favaro
 
-## Preparazione del dataset
-
 Per preparare il dataset nel formato richiesto dallo script in python, è necessario lanciare prima lo script matlab "modify_dataset.m", che salva il dataset contenuto nel file .xlsx in una matrice sparsa di 0 e 1. Lo script genera un file .mat che viene poi interpretato. Vengono inoltre salvate altre variabili di circostanza per la ricostruzione come l'identità originaria degli item.
 
 In seguito deve essere lanciato lo script matlab "calculate_support.m" che calcola il supporto medio s0 per il dataset e lo salva nel .mat precedente (valore utile al calcolo della privacy).
