@@ -58,8 +58,8 @@ print("C_T:\n {}".format(C_T))
 
 # Stima n-itemset support piÃ¹ colonne
 
-# circa 0.03 * 7500, con 0.03 support medio
 relations = []
+# threshold calcolato come circa 0.03 * 7500, con 0.03 support medio
 threshold = 250
 n = 2
 
@@ -68,13 +68,15 @@ n = 2
 M = np.zeros((pow(2, n), pow(2, n)))
 for row in range(0, pow(2, n)):
     for col in range(0, pow(2, n)):
-        # per ogni riga e colonna trasformo il corrispondente valore in binario
+        # le probabilita sono indipendenti, la probabilità finale viene calcolata
+        # come il prodotto delle opportune probabilità. temp = 1 come valore neutro per la motliplicazione
         temp = 1
+        # per ogni riga e colonna trasformo il corrispondente valore in binario
         temp_row = str('{0:b}'.format(row))
         temp_row = temp_row.zfill(n)
         temp_col = str('{0:b}'.format(col))
         temp_col = temp_col.zfill(n)
-        #
+
         # confronto bit a bit i valori ottenuti e genero opportunamente i vari mij (per ogni cifra se il bit
         # rimane uguale ho probabilita p, cambia ho prob 1-p)
         for iter in range(0, n):
@@ -86,6 +88,7 @@ for row in range(0, pow(2, n)):
 
 print("\nM_big:\n{}".format(M))
 
+# f è la cardinalità dell'insieme considerato (numero di coppie trovate)
 f = 0
 somma = 0
 # uso due for annidati per esplorare tutte le coppie di 10 elementi. start da 0 a 10-1 e l da start+1 a 10 evitando ripetizioni
@@ -108,17 +111,23 @@ for start in range(0, 9):
                 if str(k) == binario:
                     C2n_D[pow(2, n)-1-i][0] += 1
                     #print("\nC2n_D:\n{}".format(C2n_D))
+                # inoltre solo al primo giro vengono contate anche le relazioni associative presenti nel dataset originale
+                # TODO: generalizzare questo controllo per n>2
                 if i == 0 and dataset.A[h][start] == 1 and dataset.A[h][l] == 1:
                         act_support += 1
-        #modifiche------------
+        # calcolo del supporto ricostruito: calcoliamo la probabilità che un 11 sia stato distorto in uno qualsiasi delle
+        # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D
         rec_support = M[0][0]*C2n_D[0][0] + M[0][1]*C2n_D[1][0] + M[0][1]*C2n_D[2][0] + M[0][3]*C2n_D[3][0]
 
         act_support /= 7500
+        # act suport talvolta viene zero con evidenti problemi nella formula normale del calcolo del support error, paragrafo 6.3,
+        # presente nell'else
+        #  abbiamo deciso di impedire artificialmente l'errore per poter continuare ad ottenere risultati (da mettere apposto)
         if act_support == 0:
             somma += 0
         else:
             somma += (abs(1-act_support)/act_support)
-        #modifiche -----------------
+
         # calcolo C_T
         # TODO: ha lo stesso identico problema del C_T monodimensionale (numeri negativi presenti)...ignoriamo il problema in questo caso
         C2n_T = np.dot(np.linalg.inv(M), C2n_D)
@@ -129,6 +138,8 @@ for start in range(0, 9):
             relation = str(items[start][:]) + " --> " + str(items[l][:])
             relations.append(relation)
 
+# conclusione del calcolo del support error i valori riscontrati sono enormi, nell'ordine delle migliaia.
+# Dovrebbero essere, al massimo, nell'ordine delle unità.
 result = 100/f * somma
 print("\nrelations:\n{}".format(relations))
 print("\nresultanze:\n{}".format(result))
