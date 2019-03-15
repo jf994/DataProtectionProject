@@ -2,7 +2,9 @@
 
 ## Problemi riscontrati
 
-In "main.py", file che sostanzialmente contiene tutto il procedimento mostrato nel paper, abbiamo riscontrato problemi relativamente al calcolo di C_T partendo dalla conoscenza di C_D (sia per quanto riguarda il caso monodimensionale che per quello multidimensionale). C_T ottenuto tramite prodotto tra l'inversa di M (opportunamente creata) e C_D, dà in output valori numerici insensati. Nel caso monodimensionale abbiamo un valore > 7500 ed un altro negativo (la somma di questi due, però, fa 7500). Nel caso multidimensionale otteniamo sempre errori di questo genere con numeri negativi o troppo grandi.
+* In "main.py", file che sostanzialmente contiene tutto il procedimento mostrato nel paper, abbiamo riscontrato problemi relativamente al calcolo di C_T partendo dalla conoscenza di C_D (sia per quanto riguarda il caso monodimensionale che per quello multidimensionale). C_T ottenuto tramite prodotto tra l'inversa di M (opportunamente creata) e C_D, dà in output valori numerici insensati. Nel caso monodimensionale abbiamo un valore > 7500 ed un altro negativo (la somma di questi due, però, fa 7500). Nel caso multidimensionale otteniamo sempre errori di questo genere con numeri negativi o troppo grandi.
+
+* act_support, calcolato in "main.py", relativo alla formula presentata nel paragrafo 6.3 del pdf talvolta viene zero generando una divisione per zero (risolto settando a zero per quel giro il risultato di (rec_support-act_support/at_support) )
 
 ## Funzionamento generale 
 
