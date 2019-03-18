@@ -29,7 +29,7 @@ for i in range(0, len(tot[0])):
 
 # chiamo la funzione apriori settando opportuni parametri
 print("Doing association...\n")
-association_rules = apriori(records, min_support=0.005, min_confidence=0.3, min_lift=1.5, min_length=2)
+association_rules = apriori(records, min_support=0.0045, min_confidence=0.2, min_lift=3, min_length=2)
 association_results = list(association_rules)
 
 # stampo i risultati ottenuti
@@ -39,14 +39,15 @@ for item in association_results:
     items = [x for x in pair]
 
     rule = "Rule:"
-    for obj in items:
-        rule = " " + rule + " --> " + obj
-    print(rule)
+    if len(items) == 2:
+        for obj in items:
+            rule = " " + rule + " --> " + obj
+        print(rule)
 
-    #second index of the inner list
-    print("Support: " + str(item[1]))
+        #second index of the inner list
+        print("Support: " + str(item[1]))
 
-    print("Confidence: " + str(item[2][0][2]))
-    print("Lift: " + str(item[2][0][3]))
-    print("=====================================")
+        print("Confidence: " + str(item[2][0][2]))
+        print("Lift: " + str(item[2][0][3]))
+        print("=====================================")
 

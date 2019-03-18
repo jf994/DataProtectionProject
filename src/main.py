@@ -47,20 +47,21 @@ C0_D = num_clients - C1_D
 # calcolo C_T partendo dalla conoscenza di C_D ed M
 M = np.matrix([[p, 1-p], [1-p, p]])
 
-C_D = np.matrix([[C1_D], [C0_D]])
-C_T = np.dot(np.linalg.inv(M), C_D)
+# USATA ROTAZIONE DI 90 GRADI INVECE CHE INVERSIONE MATRICE
+M = np.rot90(M)
+print("M:\n {}".format(M))
 
-# TODO: C_T presenta un numero > 7500 in pos 0,0 ed uno negativo in pos 1,0 (valori insensati). Questo è un tapullo per far funzionare il tutto
-C_T[0] = C_T[1] + 7500
-C_T[1] = -C_T[1]
+C_D = np.matrix([[C1_D], [C0_D]])
+C_T = np.dot(M, C_D)
+
 print("C_T:\n {}".format(C_T))
 
 
 # Stima n-itemset support più colonne
 
 relations = []
-# threshold calcolato come circa 0.03 * 7500, con 0.03 support medio
-threshold = 250
+# threshold calcolato come circa 10% di 7500
+threshold = 700
 n = 2
 
 
@@ -86,60 +87,81 @@ for row in range(0, pow(2, n)):
                 temp *= 1-p
         M[row][col] = temp
 
+
 print("\nM_big:\n{}".format(M))
 
 # f è la cardinalità dell'insieme considerato (numero di coppie trovate)
-f = 0
-somma = 0
+R = somma = F = 0
 # uso due for annidati per esplorare tutte le coppie di 10 elementi. start da 0 a 10-1 e l da start+1 a 10 evitando ripetizioni
-for start in range(0, 9):
-    for l in range(start+1, 10):
-        f += 1
-        print("giro: {}, colonne: {}{}".format(f,start, l))
+# TODO: calcolo di F ed R è corretto?
+# TODO: processo molto lento anche dopo ottimizzazioni
+# TODO: dare nomi sensati alle variabili dei for
+for start in range(0, 3):
+    for l in range(start+1, 4):
+
+        print("colonne: {}{}".format(start, l))
         # genero opportunamente C_D per il caso multidimensionale
         C2n_D = np.zeros((pow(2, n), 1))
+        C2n_D[0] = 7500
         # trovo le corrispondenze per i valori binari cercati ad ogni giro e costruisco C_D come spiegato sul pdf MASK
         act_support = 0
-        for i in range(0, pow(2, n)):
+        for i in range(0, pow(2, n)-1):
             k = '{0:b}'.format(i)
             k = k.zfill(n)
 
             for h in range(0, 7500):
-                binario = ''
-                binario = str(distorted[h, start]) + str(distorted[h, l])
-                #print(str(k) + " binario: " + binario)
-                if str(k) == binario:
-                    C2n_D[pow(2, n)-1-i][0] += 1
-                    #print("\nC2n_D:\n{}".format(C2n_D))
+
                 # inoltre solo al primo giro vengono contate anche le relazioni associative presenti nel dataset originale
                 # TODO: generalizzare questo controllo per n>2
-                if i == 0 and dataset.A[h][start] == 1 and dataset.A[h][l] == 1:
+                if i == 0:
+                    if dataset.A[h][start] == 1 and dataset.A[h][l] == 1:
                         act_support += 1
-        # calcolo del supporto ricostruito: calcoliamo la probabilità che un 11 sia stato distorto in uno qualsiasi delle
-        # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
-        rec_support = M[0][0]*C2n_D[0][0] + M[0][1]*C2n_D[1][0] + M[0][1]*C2n_D[2][0] + M[0][3]*C2n_D[3][0]
+                binario = ''
+                binario = str(distorted[h, start]) + str(distorted[h, l])
+                # print(str(k) + " binario: " + binario)
+                if str(k) == binario:
+                    C2n_D[pow(2, n) - 1 - i][0] += 1
 
-        act_support /= 7500
-        # act suport talvolta viene zero con evidenti problemi nella formula normale del calcolo del support error, paragrafo 6.3,
-        # presente nell'else
-        #  abbiamo deciso di impedire artificialmente l'errore per poter continuare ad ottenere risultati (da mettere apposto)
-        if act_support == 0:
-            somma += 0
-        else:
-            somma += (abs(1-act_support)/act_support)
+                    # ottimizzazione per fare meno conti (11 in distorted è sicuramente la classe più frequente)
+                    C2n_D[0] -= 1
 
         # calcolo C_T
-        # TODO: ha lo stesso identico problema del C_T monodimensionale (numeri negativi presenti)...ignoriamo il problema in questo caso
-        C2n_T = np.dot(np.linalg.inv(M), C2n_D)
+        # USATA ROTAZIONE DI 90 GRADI INVECE CHE INVERSIONE MATRICE
+        C2n_T = np.dot(np.rot90(M), C2n_D)
         print("\nC_T_big:\n {}".format(C2n_T))
-        # se il primo valore, relativo a 11 per il vettore appena ottenuto supera il theshold
+        # se il primo valore, relativo a 11 per il vettore appena ottenuto supera il theshold, abbiamo un itemset frequente
         if C2n_T[0] > threshold:
+            R += 1
+            # calcolo del supporto ricostruito: calcoliamo la probabilità che un 11 sia stato distorto in uno qualsiasi delle
+            # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
+            #rec_support = M[0][0] * C2n_D[0][0] + M[0][1] * C2n_D[1][0] + M[0][1] * C2n_D[2][0] + M[0][3] * C2n_D[3][0]
+            F = act_support
+            act_support /= 7500
+            rec_support = float(C2n_T[0]) / 7500
+            # act suport talvolta viene zero con evidenti problemi nella formula normale del calcolo del support error, paragrafo 6.3,
+            # presente nell'else
+            #  abbiamo deciso di impedire artificialmente l'errore per poter continuare ad ottenere risultati (da mettere apposto)
+            if act_support == 0:
+                somma += 0
+            else:
+                somma += (abs(rec_support - act_support) / act_support)
+            print("\nrel_s: {}, act_s: {}\nC2n_D:\n{}".format(rec_support, act_support, C2n_D))
             # creo la relazione e la appendo alla lista
             relation = str(items[start][:]) + " --> " + str(items[l][:])
             relations.append(relation)
 
 # conclusione del calcolo del support error i valori riscontrati sono enormi, nell'ordine delle migliaia.
 # Dovrebbero essere, al massimo, nell'ordine delle unità
-result = 100/f * somma
+
+# CALCOLO SUPPORT ERROR
+# TODO: support_error viene un numero enorme
+support_error = 100/F * somma
 print("\nrelations:\n{}".format(relations))
-print("\nrisultati:\n{}".format(result))
+print("\nsupport error:\n{}".format(support_error))
+
+# CALCOLO IDENTITY ERROR
+
+S_plus = (abs(R - F)/F) * 100
+S_minus = (abs(F - R)/F) * 100
+
+print("\nF: {}\nR: {}\nS+: {}\nS-: {}\n".format(F, R, S_plus, S_minus))
