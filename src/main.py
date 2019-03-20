@@ -1,6 +1,7 @@
 from scipy import io
 import numpy as np
 from scipy import sparse
+import time
 
 # Carico i valori salvati nei file .mat
 file_mat_ds = io.loadmat('dataset.mat')
@@ -58,6 +59,8 @@ print("C_T:\n {}".format(C_T))
 
 
 # Stima n-itemset support più colonne
+t = time.time()
+
 
 relations = []
 # threshold calcolato come circa 10% di 7500
@@ -96,8 +99,8 @@ R = somma = F = 0
 # TODO: calcolo di F ed R è corretto?
 # TODO: processo molto lento anche dopo ottimizzazioni
 # TODO: dare nomi sensati alle variabili dei for
-for start in range(0, 3):
-    for l in range(start+1, 4):
+for start in range(0, 40):
+    for l in range(start+1, 118):
 
         print("colonne: {}{}".format(start, l))
         # genero opportunamente C_D per il caso multidimensionale
@@ -155,6 +158,10 @@ for start in range(0, 3):
 
 # CALCOLO SUPPORT ERROR
 # TODO: support_error viene un numero enorme
+
+if F == 0:
+    F = -1
+
 support_error = 100/F * somma
 print("\nrelations:\n{}".format(relations))
 print("\nsupport error:\n{}".format(support_error))
@@ -165,3 +172,5 @@ S_plus = (abs(R - F)/F) * 100
 S_minus = (abs(F - R)/F) * 100
 
 print("\nF: {}\nR: {}\nS+: {}\nS-: {}\n".format(F, R, S_plus, S_minus))
+elapsed = time.time() - t
+print("\ntime: {}".format(elapsed))
