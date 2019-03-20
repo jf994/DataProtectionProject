@@ -23,6 +23,8 @@
 
 3) Abbiamo reinterpretato come il valore delle combinazioni di n elementi i cui supporti superano il threshold da noi fissato (10% circa del totale campione di utenti)
 
+4) OK
+
 ## Funzionamento generale 
 
 Per preparare il dataset nel formato richiesto dallo script in python, è necessario lanciare prima lo script matlab "modify_dataset.m", che salva il dataset contenuto nel file .xlsx in una matrice sparsa di 0 e 1. Lo script genera un file .mat che viene poi interpretato. Vengono inoltre salvate altre variabili di circostanza per la ricostruzione come l'identità originaria degli item.
