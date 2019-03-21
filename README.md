@@ -1,5 +1,22 @@
 # Progetto a cura di Fabrizio Zavanone e Jacopo Favaro
 
+## Risultati
+
+### 2-itemset, 40-118, threshold 700
+
+support error:
+3969397.3862699177
+
+F: 12
+R: 2667
+S+: 22125.0
+S-: 22125.0
+
+
+time: 39137.8520116806
+
+Process finished with exit code 0
+
 ## Problemi riscontrati
 
 1) In "main.py", file che sostanzialmente contiene tutto il procedimento mostrato nel paper, abbiamo riscontrato problemi relativamente al calcolo di C_T partendo dalla conoscenza di C_D (sia per quanto riguarda il caso monodimensionale che per quello multidimensionale). C_T ottenuto tramite prodotto tra l'inversa di M (opportunamente creata) e C_D, dà in output valori numerici insensati. Nel caso monodimensionale abbiamo un valore > 7500 ed un altro negativo (la somma di questi due, però, fa 7500). Nel caso multidimensionale otteniamo sempre errori di questo genere con numeri negativi o troppo grandi.
@@ -24,6 +41,10 @@
 3) Abbiamo reinterpretato come il valore delle combinazioni di n elementi i cui supporti superano il threshold da noi fissato (10% circa del totale campione di utenti)
 
 4) OK
+
+5) OK
+
+6) OK
 
 ## Funzionamento generale 
 
