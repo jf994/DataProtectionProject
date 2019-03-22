@@ -1,12 +1,9 @@
 import numpy as np
 
 def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
-    # f è la cardinalità dell'insieme considerato (numero di coppie trovate)
+    # F è la cardinalità dell'insieme considerato (numero di triple trovate)
     R = somma = F = 0
-    # uso due for annidati per esplorare tutte le coppie di 10 elementi. first_column da 0 a 10-1 e l da first_column+1 a 10 evitando ripetizioni
-    # TODO: calcolo di F ed R è corretto?
-    # TODO: processo molto lento anche dopo ottimizzazioni
-    # TODO: dare nomi sensati alle variabili dei for
+    # stesso metodo del 2-itemset, solo giro sulle triple e non sulle coppie
     for first_column in range(0, 3):
         for second_column in range(first_column+1, 4):
             for third_column in range(second_column+1, 5):
@@ -24,7 +21,6 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
                     for h in range(0, 7500):
 
                         # inoltre solo al primo giro vengono contate anche le relazioni associative presenti nel dataset originale
-                        # TODO: generalizzare questo controllo per n>2
                         if i == 0:
                             if dataset.A[h][first_column] == 1 and dataset.A[h][second_column] == 1 and dataset.A[h][third_column] == 1:
                                 act_support += 1
@@ -41,13 +37,11 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
                 # USATA ROTAZIONE DI 90 GRADI INVECE CHE INVERSIONE MATRICE
                 C2n_T = np.dot(np.rot90(M), C2n_D)
                 print("\nC_T_big:\n {}".format(C2n_T))
-                # se il primo valore, relativo a 11 per il vettore appena ottenuto supera il theshold, abbiamo un itemset frequente
 
-                R += 1
-                # calcolo del supporto ricostruito: calcoliamo la probabilità che un 11 sia stato distorto in uno qualsiasi delle
-                # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
+                # calcolo rec_support ed act_support
                 F = act_support
                 act_support /= 7500
+
                 rec_support = 0
                 for c in range (0,pow(2,n)):
                     rec_support += M[0][c] * C2n_D[c][0]
@@ -57,9 +51,11 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
                 # rec_support = float(C2n_T[0]) / 7500
                 print("\nrec_support: {}\n".format(rec_support))
                 if rec_support > threshold:
+                    # se il rec_support appena ottenuto supera il theshold, abbiamo un itemset frequente: incremento R
+                    R += 1
                     # act suport talvolta viene zero con evidenti problemi nella formula normale del calcolo del support error, paragrafo 6.3,
                     # presente nell'else
-                    #  abbiamo deciso di impedire artificialmente l'errore per poter continuare ad ottenere risultati (da mettere apposto)
+                    #  abbiamo deciso di impedire artificialmente l'errore per poter continuare ad ottenere risultati
                     if act_support == 0:
                         somma += 0
                     else:
@@ -73,8 +69,7 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
     # Dovrebbero essere, al massimo, nell'ordine delle unità
 
     # CALCOLO SUPPORT ERROR
-    # TODO: support_error viene un numero enorme
-
+    # evito divisione per zero
     if F == 0:
         F = -1
 
