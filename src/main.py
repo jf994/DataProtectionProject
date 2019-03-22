@@ -31,17 +31,11 @@ relations = []
 # calcolo privacy
 calculate_privacy(support, p)
 
-
-
 # Stima n-itemset support più colonne
 t = time.time()
 
-
-
 # calcolo M per l'n desiderato
 M = calc_M(n, p)
-
-
 
 print("\nM:\n{}".format(M))
 
