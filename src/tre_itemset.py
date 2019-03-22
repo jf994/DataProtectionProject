@@ -30,7 +30,7 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
                         if str(k) == binario:
                             C2n_D[pow(2, n) - 1 - i][0] += 1
 
-                            # ottimizzazione per fare meno conti (11 in distorted è sicuramente la classe più frequente)
+                            # ottimizzazione per fare meno conti (111 in distorted è sicuramente la classe più frequente)
                             C2n_D[0] -= 1
 
                 # calcolo C_T

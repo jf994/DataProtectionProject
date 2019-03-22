@@ -3,7 +3,7 @@ function ri_ = ri_complement(p)
 % passata
     % applico la formula derivata dal pdf MASK, paragrafo 3.1
     random = randi([1 10]);
-    if random > p
+    if random > p * 10
         ri_ = 1;
     else
         ri_ = 0;

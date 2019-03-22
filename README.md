@@ -25,7 +25,7 @@
 
 ## Risoluzione problemi
 
-1) Risolto ruotando di 90 gradi la matrice M invece che usare l'inversa (risolve il problema sia per il caso monodimensionale che per quello multidimensionale)
+1) Trovato errore concettuale in ri_complement.m (distorsione del dataset fatta in maniera scorretta)
 
 2) OK
 

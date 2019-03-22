@@ -4,7 +4,7 @@ clc
 % faccio distorsione dataset
 load('dataset.mat');
 % probabilità
-p = .7;
+p = .9;
 
 % applico la formula della distorsione
 distorted = [];

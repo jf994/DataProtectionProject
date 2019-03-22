@@ -34,7 +34,7 @@ def estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations):
 
             # calcolo C_T
             # USATA ROTAZIONE DI 90 GRADI INVECE CHE INVERSIONE MATRICE
-            C2n_T = np.dot(np.rot90(M), C2n_D)
+            C2n_T = np.dot(np.linalg.inv(M), C2n_D)
             print("\nC_T_big:\n {}".format(C2n_T))
 
             # calcolo rec_support ed act_support
