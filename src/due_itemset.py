@@ -7,8 +7,8 @@ def estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations):
     # TODO: calcolo di F ed R è corretto?
     # TODO: processo molto lento anche dopo ottimizzazioni
     # TODO: dare nomi sensati alle variabili dei for
-    for first_column in range(0, 40):
-        for second_column in range(first_column+1, 118):
+    for first_column in range(50, 60):
+        for second_column in range(first_column+1, 61):
 
             print("colonne: {} {}".format(first_column, second_column))
             # genero opportunamente C_D per il caso multidimensionale

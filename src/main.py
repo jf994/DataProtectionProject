@@ -38,7 +38,7 @@ t = time.time()
 relations = []
 # threshold calcolato come circa 10% di 7500
 threshold = 0.25
-n = 3
+n = 2
 
 M = calc_M(n, p)
 
