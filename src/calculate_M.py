@@ -23,4 +23,4 @@ def calc_M(n, p):
                     temp *= 1 - p
             M[row][col] = temp
 
-    return M
+    return np.linalg.inv(M)

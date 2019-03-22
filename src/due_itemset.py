@@ -4,8 +4,8 @@ def estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations):
     # F è la cardinalità dell'insieme considerato (numero di coppie trovate)
     R = somma = F = 0
     # uso due for annidati per esplorare tutte le coppie di x elementi. first_column da 0 a x e second_column da first_column+1 ad x evitando ripetizioni
-    for first_column in range(50, 54):
-        for second_column in range(first_column+1, 55):
+    for first_column in range(0, 4):
+        for second_column in range(first_column+1, 5):
 
             print("colonne: {} {}".format(first_column, second_column))
             # genero opportunamente C_D per il caso multidimensionale
@@ -33,8 +33,7 @@ def estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations):
                         C2n_D[0] -= 1
 
             # calcolo C_T
-            # USATA ROTAZIONE DI 90 GRADI INVECE CHE INVERSIONE MATRICE
-            C2n_T = np.dot(np.linalg.inv(M), C2n_D)
+            C2n_T = np.dot(M, C2n_D)
             print("\nC_T_big:\n {}".format(C2n_T))
 
             # calcolo rec_support ed act_support

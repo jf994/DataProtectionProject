@@ -12,9 +12,8 @@ def estimate_singleton(distorted, p, num_clients, M):
 
     # calcolo C_T partendo dalla conoscenza di C_D ed M
     # inversione matrice
-    M = np.linalg.inv(M)
 
     C_D = np.matrix([[C1_D], [C0_D]])
     C_T = np.dot(M, C_D)
 
-    print("C_T_bad:\n {}".format(C_T))
+    print("C_T:\n {}".format(C_T))

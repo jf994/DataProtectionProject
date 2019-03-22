@@ -21,10 +21,10 @@ distorted = np.matrix(file_mat_dist['distorted'])
 p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])
 
-# threshold 0.25 come nel paper
-threshold = 0.25
+# threshold 0.0025 come nel paper
+threshold = 0.0025
 # set dell' n itemset
-n = 1
+n = 2
 # preparo il contenitore per le relazioni finali
 relations = []
 
@@ -37,7 +37,7 @@ t = time.time()
 # calcolo M per l'n desiderato
 M = calc_M(n, p)
 
-print("\nM:\n{}".format(M))
+print("\nM_inv:\n{}".format(M))
 
 # stima per il 2-itemset
 if n == 1:
