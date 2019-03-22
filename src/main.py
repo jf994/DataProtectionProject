@@ -16,40 +16,50 @@ items = file_mat_ds['items']
 num_items = len(np.array(file_mat_ds['items']))
 support = float(file_mat_ds['support'])
 
-
 file_mat_dist = io.loadmat('distorted.mat')
 distorted = np.matrix(file_mat_dist['distorted'])
 p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])
 
+# threshold 0.25 come nel paper
+threshold = 0.25
+# set dell' n itemset
+n = 2
+# preparo il contenitore per le relazioni finali
+relations = []
+
 # calcolo privacy
 calculate_privacy(support, p)
 
-# Stima singleton supports 1 colonna
-estimate_singleton(distorted, p, num_clients)
-
-# Stima errata (metodo paper)
-bad_estimate_singleton(distorted, p, num_clients)
 
 
 # Stima n-itemset support più colonne
 t = time.time()
 
-relations = []
-# threshold 0.25 come nel paper
-threshold = 0.25
-n = 2
 
+
+# calcolo M per l'n desiderato
 M = calc_M(n, p)
 
-print("\nM_big:\n{}".format(M))
+
+
+print("\nM:\n{}".format(M))
 
 # stima per il 2-itemset
-if n == 2:
+if n == 1:
+    # Stima singleton supports 1 colonna
+    estimate_singleton(distorted, p, num_clients, M)
+
+    # Stima errata (metodo paper)
+    bad_estimate_singleton(distorted, p, num_clients, M)
+
+elif n == 2:
     estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations)
 # stima per il 3-itemset
 elif n == 3:
     estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations)
 
 elapsed = time.time() - t
-print("\ntime: {}".format(elapsed))
+elapsed /= 3600
+
+print("\ntime: {} ore".format(elapsed))
