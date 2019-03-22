@@ -1,8 +1,8 @@
 import numpy as np
 
 def calc_M(n, p):
-    # trovo la M per il caso multidimensionale
     M = np.zeros((pow(2, n), pow(2, n)))
+    #calcolo tutti i valori di M(row,col)
     for row in range(0, pow(2, n)):
         for col in range(0, pow(2, n)):
             # le probabilita sono indipendenti, la probabilità finale viene calcolata
