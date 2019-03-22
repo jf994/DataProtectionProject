@@ -7,9 +7,9 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
     # TODO: calcolo di F ed R è corretto?
     # TODO: processo molto lento anche dopo ottimizzazioni
     # TODO: dare nomi sensati alle variabili dei for
-    for first_column in range(0, 1):
-        for second_column in range(first_column+1, 2):
-            for third_column in range(second_column+1, 3):
+    for first_column in range(0, 3):
+        for second_column in range(first_column+1, 4):
+            for third_column in range(second_column+1, 5):
 
                 print("colonne: {} {} {}".format(first_column, second_column, third_column))
                 # genero opportunamente C_D per il caso multidimensionale
@@ -42,14 +42,19 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
                 C2n_T = np.dot(np.rot90(M), C2n_D)
                 print("\nC_T_big:\n {}".format(C2n_T))
                 # se il primo valore, relativo a 11 per il vettore appena ottenuto supera il theshold, abbiamo un itemset frequente
-                if C2n_T[0] > threshold:
-                    R += 1
-                    # calcolo del supporto ricostruito: calcoliamo la probabilità che un 11 sia stato distorto in uno qualsiasi delle
-                    # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
-                    #rec_support = M[0][0] * C2n_D[0][0] + M[0][1] * C2n_D[1][0] + M[0][1] * C2n_D[2][0] + M[0][3] * C2n_D[3][0]
-                    F = act_support
-                    act_support /= 7500
-                    rec_support = float(C2n_T[0]) / 7500
+
+                R += 1
+                # calcolo del supporto ricostruito: calcoliamo la probabilità che un 11 sia stato distorto in uno qualsiasi delle
+                # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
+                F = act_support
+                act_support /= 7500
+
+                rec_support = (M[0][0] * C2n_D[0][0] + M[0][1] * C2n_D[1][0] + M[0][1] * C2n_D[2][0] + M[0][3] * C2n_D[3][0]) / 7500
+                # NOSTRA OTTIMIZZAZIONE
+                # riduciamo i calcoli computando il rec support in questa maniera
+                # rec_support = float(C2n_T[0]) / 7500
+                print("\nrec_support: {}\n".format(rec_support))
+                if rec_support > threshold:
                     # act suport talvolta viene zero con evidenti problemi nella formula normale del calcolo del support error, paragrafo 6.3,
                     # presente nell'else
                     #  abbiamo deciso di impedire artificialmente l'errore per poter continuare ad ottenere risultati (da mettere apposto)
