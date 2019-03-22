@@ -2,20 +2,11 @@
 
 ## Risultati
 
-### 2-itemset, 40-118, threshold 700
-
-support error:
-3969397.3862699177
-
-F: 12
-R: 2667
-S+: 22125.0
-S-: 22125.0
+### 2-itemset, 0-40/118, threshold 0.25
 
 
-time: 39137.8520116806
+### 3-itemset, 50-70/71/72, threshold 0.25
 
-Process finished with exit code 0
 
 ## Problemi riscontrati
 

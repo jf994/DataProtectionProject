@@ -48,8 +48,10 @@ def estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations):
                 # forme possibili (00 01 10 11) usando valori opportuni nella matrice M e quelli del vettore C2n_D (paragrafo 5.1)
                 F = act_support
                 act_support /= 7500
-
-                rec_support = (M[0][0] * C2n_D[0][0] + M[0][1] * C2n_D[1][0] + M[0][1] * C2n_D[2][0] + M[0][3] * C2n_D[3][0]) / 7500
+                rec_support = 0
+                for c in range (0,pow(2,n)):
+                    rec_support += M[0][c] * C2n_D[c][0]
+                rec_support /= 7500
                 # NOSTRA OTTIMIZZAZIONE
                 # riduciamo i calcoli computando il rec support in questa maniera
                 # rec_support = float(C2n_T[0]) / 7500

@@ -36,7 +36,7 @@ bad_estimate_singleton(distorted, p, num_clients)
 t = time.time()
 
 relations = []
-# threshold calcolato come circa 10% di 7500
+# threshold 0.25 come nel paper
 threshold = 0.25
 n = 2
 

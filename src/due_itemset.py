@@ -7,8 +7,8 @@ def estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations):
     # TODO: calcolo di F ed R è corretto?
     # TODO: processo molto lento anche dopo ottimizzazioni
     # TODO: dare nomi sensati alle variabili dei for
-    for first_column in range(50, 60):
-        for second_column in range(first_column+1, 61):
+    for first_column in range(50, 54):
+        for second_column in range(first_column+1, 55):
 
             print("colonne: {} {}".format(first_column, second_column))
             # genero opportunamente C_D per il caso multidimensionale
@@ -49,7 +49,10 @@ def estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations):
             F = act_support
             act_support /= 7500
 
-            rec_support = (M[0][0] * C2n_D[0][0] + M[0][1] * C2n_D[1][0] + M[0][1] * C2n_D[2][0] + M[0][3] * C2n_D[3][0]) / 7500
+            rec_support = 0
+            for c in range(0, pow(2, n)):
+                rec_support += M[0][c] * C2n_D[c][0]
+            rec_support /= 7500
             # NOSTRA OTTIMIZZAZIONE
             # riduciamo i calcoli computando il rec support in questa maniera
             # rec_support = float(C2n_T[0]) / 7500
