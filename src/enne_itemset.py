@@ -55,7 +55,7 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
                 # se le due stringhe coincidono incremento il valore opportuno nel vettore Cn_D
                 if str(bin_list[i]) == binario:
                     Cn_D[pow(2, n) - i - 1] += 1
-                    # ottimizzazione per fare meno conti (11 in distorted è sicuramente la classe più frequente)
+                    # ottimizzazione per fare meno conti (0...0 in distorted è probabilmente la classe più frequente)
                     Cn_D[pow(2, n)-1] -= 1
 
         # calcolo C_T
@@ -93,12 +93,15 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
             # creo la relazione e la appendo alla lista
             relation = ""
             for pos2, el in enumerate(el_comb):
-                relation += str(items[el][:])
+
+                if n > 1:
+                    relation += str(items[el][:])
                 if pos2 < len(el_comb)-1:
                     relation += " --> "
                 if el not in new_active_items:
                     new_active_items.append(el)
-            relations.append(relation)
+            if n > 1:
+                relations.append(relation)
         # se la relazione compare nel support ricostruito ma non nell'reale ho un falso positivo
         if rec and not act:
             R_plus += 1
