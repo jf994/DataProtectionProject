@@ -79,8 +79,8 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
             else:
                 somma += (abs(rec_support - act_support) / act_support)
 
-        # print("\nrec_support: {}".format(rec_support))
-        # print("act_s: {}".format(act_support))
+        print("\nrec_support: {}".format(rec_support))
+        print("act_s: {}".format(act_support))
         if rec_support > threshold:
             rec = True
             # creo la relazione e la appendo alla lista
@@ -96,9 +96,6 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
             R_plus += 1
         if not rec and act:
             R_minus += 1
-
-    # conclusione del calcolo del support error i valori riscontrati sono enormi, nell'ordine delle migliaia.
-    # Dovrebbero essere, al massimo, nell'ordine delle unità
 
     # CALCOLO SUPPORT ERROR
     # evito divisione per zero
