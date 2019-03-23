@@ -2,12 +2,10 @@ from scipy import io
 import numpy as np
 from scipy import sparse
 import time
+from itertools import combinations
 
 from get_privacy import calculate_privacy
-from singleton import estimate_singleton
-from calculate_M import calc_M
-from due_itemset import estimate_2_itemset
-from tre_itemset import estimate_3_itemset
+from enne_itemset import estimate_n_itemset
 
 # Carico i valori salvati nei file .mat
 file_mat_ds = io.loadmat('dataset.mat')
@@ -22,9 +20,9 @@ p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])
 
 # threshold 0.0025 come nel paper
-threshold = 0.0025
-# set dell' n itemset
-n = 2
+threshold = 0.025
+print("\nthreshold: {}\n".format(threshold))
+
 # preparo il contenitore per le relazioni finali
 relations = []
 
@@ -34,20 +32,9 @@ calculate_privacy(support, p)
 # Stima n-itemset support più colonne
 t = time.time()
 
-# calcolo M per l'n desiderato
-M = calc_M(n, p)
+comb = combinations(list(range(10, 25)), 1)
 
-print("\nM_inv:\n{}".format(M))
-
-# stima per il 2-itemset
-if n == 1:
-    # Stima singleton supports 1 colonna
-    estimate_singleton(distorted, p, num_clients, M)
-elif n == 2:
-    estimate_2_itemset(dataset, distorted, n, M, threshold, items, relations)
-# stima per il 3-itemset
-elif n == 3:
-    estimate_3_itemset(dataset, distorted, n, M, threshold, items, relations)
+estimate_n_itemset(dataset, distorted, 1, p, threshold, items, relations, comb)
 
 elapsed = time.time() - t
 elapsed /= 3600

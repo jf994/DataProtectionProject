@@ -11,4 +11,4 @@ def calculate_privacy(support, p):
 
     R = a * R1 + (1 - a) * R0
     privacy = (1 - R) * 100
-    print("User Privacy raggiunta: {}%".format(privacy))
+    print("User Privacy raggiunta: {}%".format(round(privacy)))

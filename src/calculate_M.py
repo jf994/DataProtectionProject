@@ -10,9 +10,9 @@ def calc_M(n, p):
             temp = 1
             # per ogni riga e colonna trasformo il corrispondente valore in binario
             temp_row = str('{0:b}'.format(row))
-            temp_row = temp_row.zfill(n)
+            temp_row = str(temp_row.zfill(n))
             temp_col = str('{0:b}'.format(col))
-            temp_col = temp_col.zfill(n)
+            temp_col = str(temp_col.zfill(n))
 
             # confronto bit a bit i valori ottenuti e genero opportunamente i vari mij (per ogni cifra se il bit
             # rimane uguale ho probabilita p, cambia ho prob 1-p)
@@ -23,4 +23,4 @@ def calc_M(n, p):
                     temp *= 1 - p
             M[row][col] = temp
 
-    return np.linalg.inv(M)
+    return M
