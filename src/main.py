@@ -19,7 +19,7 @@ distorted = np.matrix(file_mat_dist['distorted'])
 p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])
 
-# threshold 0.0025 come nel paper
+# threshold 0.025 come nel paper
 threshold = 0.025
 print("\nthreshold: {}\n".format(threshold))
 
@@ -32,11 +32,13 @@ calculate_privacy(support, p)
 # Stima n-itemset support più colonne
 t = time.time()
 
-comb = combinations(list(range(10, 25)), 1)
+# vettore delle combinazioni dei singoli elementi da 0 a 118
+comb = combinations(list(range(0, 118)), 1)
 
+# chiamo a finzione ricorsiva
 estimate_n_itemset(dataset, distorted, 1, p, threshold, items, relations, comb)
 
+# fisso il tempo, espresso in ore, e lo printo
 elapsed = time.time() - t
 elapsed /= 3600
-
 print("\ntime: {} ore".format(elapsed))

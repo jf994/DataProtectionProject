@@ -8,19 +8,19 @@ def calc_M(n, p):
             # le probabilita sono indipendenti, la probabilità finale viene calcolata
             # come il prodotto delle opportune probabilità. temp = 1 come valore neutro per la motliplicazione
             temp = 1
-            # per ogni riga e colonna trasformo il corrispondente valore in binario
+            # per ogni riga e colonna ricavo il corrispondente valore in binario a n cifre
             temp_row = str('{0:b}'.format(row))
             temp_row = str(temp_row.zfill(n))
             temp_col = str('{0:b}'.format(col))
             temp_col = str(temp_col.zfill(n))
 
-            # confronto bit a bit i valori ottenuti e genero opportunamente i vari mij (per ogni cifra se il bit
-            # rimane uguale ho probabilita p, cambia ho prob 1-p)
+            # confronto bit a bit i valori ottenuti e genero opportunamente i vari mij
+            # (per ogni cifra il bit rimane uguale con probabilita p, cambia con prob 1-p)
             for iter in range(0, n):
                 if (temp_row[iter] == temp_col[iter]):
                     temp *= p
                 else:
                     temp *= 1 - p
             M[row][col] = temp
-
     return M
+
