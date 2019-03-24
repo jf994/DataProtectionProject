@@ -12,13 +12,6 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
     # F è la cardinalità dell'insieme degli item frequenti
     R_plus = somma = F = R_minus = 0
     new_active_items = []
-    bin_list = []
-
-    # genero per l'n corrente tutte le interpretazioni binarie a n cifre dei numeri da 0 a 2^n-1
-    for i in range(0, pow(2, n)):
-        k = '{0:b}'.format(i)
-        k = k.zfill(n)
-        bin_list.append(k)
 
     print("Livello: {}\n".format(n))
     # uso due for annidati per esplorare tutte le coppie di x elementi. first_column da 0 a x e second_column da first_column+1 ad x evitando ripetizioni
@@ -26,41 +19,37 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
         print("Colonne: {}".format(el_comb))
         # istanzio opportunamente C_D l'ultimo valore verrà ricavato per sottrazione, partirà quindi da 7500
         Cn_D = np.zeros((pow(2, n), 1))
-        Cn_D[pow(2, n)-1] = 7500
+
         # trovo le corrispondenze per i valori binari cercati ad ogni giro e costruisco C_D come spiegato sul pdf MASK
         act_support = 0
-        for i in range(1, pow(2, n)):
-            for h in range(0, 7500):
-                # inoltre solo al primo giro vengono contate anche le relazioni associative presenti nel dataset originale
-                if i == 1:
-                    ctrl = True
-                    pos = 0
-                    # ricerco nel dataset originale gli n-itemset presenti
-                    while pos < len(el_comb) and ctrl:
-                        # print("el_comb[pos]: {}\n".format(el_comb[pos]))
-                        # se uno solo dei valori è zero smetto di controllare
-                        if dataset.A[h][el_comb[pos]] != 1:
-                            ctrl = False
-                        pos += 1
-                    if ctrl:
-                        # se tutti gli n item sono a 1 incremento il contatore
-                        act_support += 1
-                        # print("act_s_dentro_ctrl: {}".format(act_support))
-
+        for h in range(0, 7500):
+            # inoltre vengono contate anche le relazioni associative presenti nel dataset originale
+            ctrl = True
+            pos = 0
+            # ricerco nel dataset originale gli n-itemset presenti
+            binario = ""
+            while pos < len(el_comb):
+                # print("el_comb[pos]: {}\n".format(el_comb[pos]))
+                # se uno solo dei valori è zero smetto di controllare
+                if ctrl and dataset.A[h][el_comb[pos]] != 1:
+                    ctrl = False
                 # preparo la logica per riconoscere il numero binario, costruendo una stringa da comparare
-                binario = ""
-                for pos1, el in enumerate(el_comb):
-                    binario += str(distorted[h, el])
-                # print("binario: {}\n".format(binario))
-                # se le due stringhe coincidono incremento il valore opportuno nel vettore Cn_D
-                if str(bin_list[i]) == binario:
-                    Cn_D[pow(2, n) - i - 1] += 1
-                    # ottimizzazione per fare meno conti (0...0 in distorted è probabilmente la classe più frequente)
-                    Cn_D[pow(2, n)-1] -= 1
+                binario += str(distorted[h, el_comb[pos]])
+                # print("bin: {}\n".format(binario))
+                pos += 1
+            if ctrl:
+                # se tutti gli n item sono a 1 incremento il contatore
+                act_support += 1
+                # print("act_s_dentro_ctrl: {}".format(act_support))
+
+            posizione = int(binario, 2)
+            # print("{} --> {}\n".format(binario,posizione))
+            # incremento il valore opportuno nel vettore Cn_D in posizione opportuna
+            Cn_D[pow(2, n) - posizione - 1] += 1
 
         # calcolo C_T
         Cn_T = M_inv @ Cn_D
-        # print("C_T_2-itemset:\n {}\nCn_D:\n{}".format(Cn_T, Cn_D))
+        print("C_T_2-itemset:\n {}\nCn_D:\n{}".format(Cn_T, Cn_D))
         # print("act_s_pre_divisione: {}".format(act_support))
 
         # calcolo rec_support ed act_support
@@ -87,7 +76,7 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
 
         print("\nrec_support: {}".format(rec_support))
         print("act_s: {}".format(act_support))
-        # nel caso la relazione supero il thrashold e quindi sia "interessante"
+        # nel caso la relazione supero il threshold e quindi sia "interessante"
         if rec_support > threshold:
             rec = True
             # creo la relazione e la appendo alla lista

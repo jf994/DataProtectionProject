@@ -12,7 +12,7 @@ F = 27 ; ro = 7.19 ; sigma- = 88.9 ; sigma+ = 88.9
 
 F = 0 ; ro = 0 ; sigma- = 0 ; sigma+ = 0
 
-### Threshold 0.0025
+### Threshold 0.01
 
 #### 2-itemset 
 
