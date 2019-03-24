@@ -2,12 +2,25 @@
 
 ## Risultati
 
-### 2-itemset,  threshold 0.025
+### Threshold 0.025
 
-### 3-itemset,  threshold 0.025
+#### 2-itemset 
 
-### 4-itemset,  threshold 0.025
+F = 27 ; ro = 7.19 ; sigma- = 88.9 ; sigma+ = 88.9
 
+#### 3-itemset
+
+F = 0 ; ro = 0 ; sigma- = 0 ; sigma+ = 0
+
+### Threshold 0.0025
+
+#### 2-itemset 
+
+F =  ; ro =  ; sigma- =  ; sigma+ = 
+
+#### 3-itemset
+
+F =  ; ro =  ; sigma- =  ; sigma+ = 
 
 ## Problemi riscontrati
 
