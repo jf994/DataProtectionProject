@@ -49,7 +49,7 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
 
         # calcolo C_T
         Cn_T = M_inv @ Cn_D
-        print("C_T_2-itemset:\n {}\nCn_D:\n{}".format(Cn_T, Cn_D))
+        print("Cn_T:\n {}\nCn_D:\n{}".format(Cn_T, Cn_D))
         # print("act_s_pre_divisione: {}".format(act_support))
 
         # calcolo rec_support ed act_support

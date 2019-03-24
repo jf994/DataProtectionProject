@@ -20,7 +20,7 @@ p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])
 
 # threshold 0.025 come nel paper
-threshold = 0.025
+threshold = 0.01
 print("\nthreshold: {}\n".format(threshold))
 
 # preparo il contenitore per le relazioni finali
