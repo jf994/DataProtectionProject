@@ -107,8 +107,8 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
     print("\nsupport error:\n{}".format(support_error))
 
     # CALCOLO IDENTITY ERROR
-    S_plus = (abs(R_plus - F)/F) * 100
-    S_minus = (abs(F - R_minus)/F) * 100
+    S_plus = (abs(R_plus)/F) * 100
+    S_minus = (abs(R_minus)/F) * 100
 
     print("\nF: {}\nR_plus: {}\nR_minus: {}\nS+: {}\nS-: {}\n".format(F, R_plus, R_minus, S_plus, S_minus))
     n = n + 1

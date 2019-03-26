@@ -6,11 +6,11 @@
 
 #### 1-itemset 
 
-F = 46 ; ro = 6.08 ; sigma- = 91.3 ; sigma+ = 95.65
+F = 46 ; ro = 6.08 ; sigma- = 8.69 ; sigma+ = 4.34
 
 #### 2-itemset 
 
-F = 27 ; ro = 7.19 ; sigma- = 88.9 ; sigma+ = 88.9
+F = 27 ; ro = 7.19 ; sigma- = 11.11 ; sigma+ = 11.11
 
 #### 3-itemset
 
@@ -20,11 +20,11 @@ F = 0 ; ro = 0 ; sigma- = 0 ; sigma+ = 0
 
 #### 1-itemset 
 
-F = 75 ; ro = 12.51 ; sigma- = 92 ; sigma+ = 88
+F = 75 ; ro = 12.51 ; sigma- = 8 ; sigma+ = 12
 
 #### 2-itemset 
 
-F = 165 ; ro = 12.54 ; sigma- = 84.24 ; sigma+ = 85.45
+F = 165 ; ro = 12.55 ; sigma- = 15.75 ; sigma+ = 14.54
 
 #### 3-itemset
 
