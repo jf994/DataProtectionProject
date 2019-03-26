@@ -53,8 +53,6 @@ In seguito deve essere lanciato lo script matlab "calculate_support.m" che calco
 
 Deve infine essere lanciato lo script "create_distorted.m" il quale, seguendo la procedura descritta nel paper, altera il dataset originale xorando ogni elemento con un bit casuale generato da una distribuzione di bernulli con probabilità p = 0.9 .
 
-Lo script "apriori.py" è uno script di test per vedere il funzionamento della libreria trovata che applica, appunto, l'algoritmo Apriori.
-
 Lo script python principale è "main.py", il quale segue i ragionamenti proposti nel paper e svolge pedissequamente tali calcoli attraverso l'implementazione di alcune funzioni. 
 La prima parte si occupa di ricavare la privacy dovuta all'alterazione del dataset e dovrebbe essere coerente con quanto esposto nel paper.
 Vengono poi calcolate, tramite l'utilizzo di una funzione ricorsiva, tutte le relazioni associative relative a tutti gli n itemset possibili sul dataset ricostruito a partire dalla conoscenza di quello distorto e del fattore di distorsione p. Durante questi calcoli si presentano talvolta valori negativi all'interno di alcuni contatori, per non bloccare il progetto abbiamo deciso di ignorare questi errori e di considerarli come refusi di calcolo.
