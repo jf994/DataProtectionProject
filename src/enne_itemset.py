@@ -49,7 +49,7 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
 
         # calcolo C_T
         Cn_T = M_inv @ Cn_D
-        print("Cn_T:\n {}\nCn_D:\n{}".format(Cn_T, Cn_D))
+        # print("Cn_T:\n {}\nCn_D:\n{}".format(Cn_T, Cn_D))
         # print("act_s_pre_divisione: {}".format(act_support))
 
         # calcolo rec_support ed act_support
@@ -74,8 +74,8 @@ def estimate_n_itemset(dataset, distorted, n, p, threshold, items, relations,com
             else:
                 somma += (abs(rec_support - act_support) / act_support)
 
-        print("\nrec_support: {}".format(rec_support))
-        print("act_s: {}".format(act_support))
+        # print("\nrec_support: {}".format(rec_support))
+        # print("act_s: {}".format(act_support))
         # nel caso la relazione supero il threshold e quindi sia "interessante"
         if rec_support > threshold:
             rec = True

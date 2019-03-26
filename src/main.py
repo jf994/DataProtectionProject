@@ -19,8 +19,8 @@ distorted = np.matrix(file_mat_dist['distorted'])
 p = float(file_mat_dist['p'])
 num_clients = len(distorted[:, 1])
 
-# threshold 0.025 come nel paper
-threshold = 0.01
+# imposto il threshold
+threshold = 0.025
 print("\nthreshold: {}\n".format(threshold))
 
 # preparo il contenitore per le relazioni finali
