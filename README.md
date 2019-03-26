@@ -2,7 +2,11 @@
 
 ## Risultati
 
-### Threshold 0.025
+### Threshold 0.025 (4h terminato)
+
+#### 1-itemset 
+
+F = 46 ; ro = 6.08 ; sigma- = 91.3 ; sigma+ = 95.65
 
 #### 2-itemset 
 
@@ -12,15 +16,19 @@ F = 27 ; ro = 7.19 ; sigma- = 88.9 ; sigma+ = 88.9
 
 F = 0 ; ro = 0 ; sigma- = 0 ; sigma+ = 0
 
-### Threshold 0.01
+### Threshold 0.01 (23h NON terminato)
+
+#### 1-itemset 
+
+F = 75 ; ro = 12.51 ; sigma- = 92 ; sigma+ = 88
 
 #### 2-itemset 
 
-F =  ; ro =  ; sigma- =  ; sigma+ = 
+F = 165 ; ro = 12.54 ; sigma- = 84.24 ; sigma+ = 85.45
 
 #### 3-itemset
 
-F =  ; ro =  ; sigma- =  ; sigma+ = 
+F = ND ; ro = ND ; sigma- = ND ; sigma+ = ND
 
 ## Problemi riscontrati
 
